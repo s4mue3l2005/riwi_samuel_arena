@@ -12,7 +12,7 @@ def estado_aprobacion(nota,nombre):
     if nota >= 60:
         print(f"{nombre} felicidades has aprobado. ")
     else:
-        print(f"{nombre}no aprobado.  ")   
+        print(f"{nombre} no aprobado. ")   
 def lista_de_calificaciones():
     while True:
         entrada = input("ingresa tres calificaciones separadas por comas (ej. 30,80,70)")
