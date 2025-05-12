@@ -1,0 +1,121 @@
+inventario = {}
+
+def menu_principal():
+    while True:
+        print("\n-----WELCOME TO INVANTARI-----\n")
+        print("1. add product.")
+        print("2. search product.")
+        print("3. actualize price the product.")
+        print("4. delete product.")
+        print("5. calculate inventari.")
+        print("6. all inventory.")
+        print("7. out.\n")
+        
+        try:
+            option = int(input("Please selec option: "))
+        except ValueError:
+            print("Error: only numbers allowed.")
+            continue
+
+        if option == 1:
+            add_codec()
+        elif option == 2:
+            search_product()
+        elif option == 3:
+            actualiz_price()
+        elif option == 4:
+            delete_product()
+        elif option == 5:
+            if len(inventario) >= 5:
+                total = calculate_inventori()
+                print(f"The valor total del inventory is '{total:.2f}'\n")
+            else:
+                print("You need at least 5 products to calculate the inventary total.\n")
+        elif option == 6:
+            if len(inventario) >= 5:
+                all_inventory()
+            else:
+                print("You need at least 5 products to see all inventory.\n")
+        elif option == 7:
+            print("Thanks for using the sistem.")
+            break
+        else:
+            print("The number is incorrect, try again.")
+
+def add_codec():
+    name = input("Name the product: ")
+    while True:
+        try:
+            price = float(input("Introduce the price: "))
+            if price < 0: 
+                print("The price only positive.")
+                continue
+            break
+        except ValueError:
+            print("Error: only numbers.")
+    while True:
+        try:
+            cant = int(input("Introduce cantidad the product: "))
+            if cant < 0:
+                print("The cantidad only positive.")
+                continue
+            break
+        except ValueError:
+            print("Error: the cantidad debe ser un number entero.")
+    if name in inventario:
+        print(f"The product '{name}' ya existe en el inventory.")
+    else:
+        inventario[name] = (price, cant)
+        print(f"The '{name}' add whit succes.")
+
+def search_product():
+    nam = input("Name the product: ")
+    if nam in inventario:
+        price, cant = inventario[nam]
+        print(f"Product: {nam}\nPrice: {price}\ncant disp: {cant}\n")
+    else:
+        print(f"The product: '{nam}' no se encuentra in the inventory.")
+    
+def actualiz_price():
+    na = input("Name the product: ")
+    if na in inventario:
+        while True:
+            try:
+                new_price = float(input("Introduce new price: "))
+                if new_price < 0:
+                    print("The price is negative (only positive).")
+                    continue
+                break
+            except ValueError:
+                print("The price debe ser un number valido.")
+        cantidad = inventario[na][1]
+        inventario[na] = (new_price, cantidad)
+        print(f"\nThe price '{na}' a cambiado a '{new_price}'.\n")
+    else:
+        print(f"El producto '{na}' no se encuentra in the inventory\n")
+
+def delete_product():
+    ne = input("Introduce the name a eliminar: ")
+    if ne in inventario:
+        del inventario[ne]
+        print(f"The product '{ne}' a sido delete in the inventory.\n")
+    else:
+        print(f"The product '{ne}' no encontrado en el inventory.\n")
+
+def calculate_inventori():
+    return sum(price * cant for price, cant in inventario.values())
+
+def all_inventory():
+    if inventario:
+        print("----- ALL INVENTORY -----")
+        for name, (price, cant) in inventario.items():
+            print(f"product: {name}, price: {price}, cantidad: {cant}")
+        print()
+    else:
+        print("\nThe inventory is vacio.\n")
+
+def main():
+    menu_principal()
+
+if __name__=="__main__":
+    main()
