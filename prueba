@@ -1,117 +1,124 @@
-
 inventario = {}
-
 
 def menu_principal():
     while True:
-        print("\n-----WELCOME TO INVANTARI-----\n")
-        print("1. add product.")
-        print("2. search product.")
-        print("3. actualize price the product.")
-        print("4. delete product.")
-        print("5. calculate inventari.")
-        print("6. all inventory.")
-        print("7. out.\n")
+        print("\n----- BIENVENIDO A INVENTARI -----\n")
+        print("1. Agregar producto")
+        print("2. Buscar producto")
+        print("3. Actualizar precio del producto")
+        print("4. Eliminar producto")
+        print("5. Calcular valor total del inventario")
+        print("6. Mostrar inventario completo")
+        print("7. Salir\n")
         
-        option = int(input("Please selec option: "))
+        try:
+            opcion = int(input("Seleccione una opción: "))
+        except ValueError:
+            print("Error: debe ingresar un número.")
+            continue
 
-        if option == "1":   
-            add_codec()
-        elif option == '2':
-            search_product()     
-        elif option == '3':
-            actualiz_price()
-        elif option == '4':
-            delete_product()
-        elif option == '5':
-            total = calculate_inventori()
-            print(f"the valor total del inventory is '{total:.2f}'\n")
-        elif option == '6': 
-            all_inventory()
-        elif option == '7':
-            print("thanks for using se sistem.")
+        if opcion == 1:
+            agregar_producto()
+        elif opcion == 2:
+            buscar_producto()
+        elif opcion == 3:
+            actualizar_precio()
+        elif opcion == 4:
+            eliminar_producto()
+        elif opcion == 5:
+            if len(inventario) >= 5:
+                total = calcular_inventario()
+                print(f"El valor total del inventario es: ${total:.2f}\n")
+            else:
+                print("Debe haber al menos 5 productos para calcular el inventario.")
+        elif opcion == 6:
+            if len(inventario) >= 5:
+                mostrar_inventario()
+            else:
+                print("Debe haber al menos 5 productos para ver el inventario completo.")
+        elif opcion == 7:
+            print("Gracias por usar el sistema.")
             break
         else:
-            print("the number is incorrect try again.")
+            print("Número incorrecto. Intente de nuevo.")
+
+def agregar_producto():
+    nombre = input("Nombre del producto: ")
     
-
-def add_codec(name ,price ,cant ):
-    name = input("Name the product: ")
     while True:
         try:
-            price = float(input("Introduce the price: "))
-            if price < 0: 
-                print("The price only positiive")
+            precio = float(input("Introduce el precio: "))
+            if precio < 0:
+                print("El precio debe ser positivo.")
                 continue
             break
         except ValueError:
-            print("Error: only numbers")
-    while True:
-        try:
-            cant = int(input("Introduce cantidad the product: "))
-            if cant < 0:
-                print("The cantidad only positive.")
-                continue
-            break
-        except ValueError:
-            print("Error: the cantidad debe ser un number entero.")
-    if name in inventario:
-        print(f"The product '{name}' ya existe en el inventory ")
-    else:
-        inventario[name] = (price, cant)
-        print(f"The '{name}' add whit succes.")
-
-
-
-def search_product(name):
-    nam = input("Name the product: ")
-    if nam in inventario:
-        price, cant = inventario[name]
-        print(f"Product: {name}\nPrice: {price}\ncant disp: {cant}\n")
-    else:
-        print(f"The product: '{nam}' no se encuentra in the inventory.")
+            print("Error: solo se permiten números.")
     
-def actualiz_price(name, new_price):
-    na = input("Name the product: ")
     while True:
         try:
-            new_price = float(input("Introduce new price: "))
-            if new_price < 0:
-                print("The price is negative (only positive).")
+            cantidad = int(input("Introduce la cantidad del producto: "))
+            if cantidad < 0:
+                print("La cantidad debe ser positiva.")
                 continue
             break
         except ValueError:
-            print("The price debe ser un number valido")
-    if name in inventario:
-        cantidad = inventario[name][1]
-        inventario[name] = (new_price, cantidad)
-        print(f"\nThe price '{name}' a cambiado a '{new_price}'.\n")
+            print("Error: la cantidad debe ser un número entero.")
+    
+    if nombre in inventario:
+        print(f"El producto '{nombre}' ya existe en el inventario.")
     else:
-        print(f"El producto '{na}' no se encuentra in the inventory\n")
+        inventario[nombre] = (precio, cantidad)
+        print(f"Producto '{nombre}' agregado con éxito.")
 
-def delete_product(name):
-    ne = input("Introduce the name a eliminar: ")
-    if ne in inventario:
-        del inventario [name]
-        print(f"The product '{ne}' a sido delete in the inventory.\n")
+def buscar_producto():
+    nombre = input("Nombre del producto: ")
+    if nombre in inventario:
+        precio, cantidad = inventario[nombre]
+        print(f"Producto: {nombre}\nPrecio: {precio}\nCantidad disponible: {cantidad}\n")
     else:
-        print(f"the product '{ne}' no encontrado en el inventory.\n")
+        print(f"El producto '{nombre}' no se encuentra en el inventario.")
 
-def calculate_inventori():
-    return sum(price * cant for price, cant in inventario.values())
+def actualizar_precio():
+    nombre = input("Nombre del producto: ")
+    if nombre in inventario:
+        while True:
+            try:
+                nuevo_precio = float(input("Introduce el nuevo precio: "))
+                if nuevo_precio < 0:
+                    print("El precio debe ser positivo.")
+                    continue
+                break
+            except ValueError:
+                print("Error: ingrese un número válido.")
+        cantidad = inventario[nombre][1]
+        inventario[nombre] = (nuevo_precio, cantidad)
+        print(f"El precio del producto '{nombre}' se actualizó a ${nuevo_precio:.2f}.")
+    else:
+        print(f"El producto '{nombre}' no se encuentra en el inventario.")
 
-def all_inventory():
+def eliminar_producto():
+    nombre = input("Nombre del producto a eliminar: ")
+    if nombre in inventario:
+        del inventario[nombre]
+        print(f"Producto '{nombre}' eliminado del inventario.")
+    else:
+        print(f"El producto '{nombre}' no está en el inventario.")
+
+def calcular_inventario():
+    return sum(precio * cantidad for precio, cantidad in inventario.values())
+
+def mostrar_inventario():
     if inventario:
-        print("----- ALL INVENTORY -----")
-        for name, (price, cant) in inventario.items():
-            print(f"product: {name}, price: {price}, cantidad: {cant}")
-            print("\n")
-        else:
-            print("\nthe inventory is vacio.\n")
+        print("\n----- INVENTARIO COMPLETO -----")
+        for nombre, (precio, cantidad) in inventario.items():
+            print(f"Producto: {nombre}, Precio: {precio}, Cantidad: {cantidad}")
+        print()
+    else:
+        print("El inventario está vacío.")
 
 def main():
     menu_principal()
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
-
-
