@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portafolio Samuel Arena</title>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Samuel Arena</h1>
+    </header>
+
+    <!-- Menú navegación -->
+    <nav>
+        <ul>
+            <li><a href="#presentacion">Presentación</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sección de presentación -->
+    <section id="presentacion">
+        <h2>Sobre mí</h2>
+        <img src="perfil.jpg" alt="Foto de perfil" width="200">
+        <p>Hola, soy Samuel Arena, futuro desarrollador de software.</p>
+        <p>Me gusta aprender cosas nuevas y crear soluciones tecnológicas.</p>
+    </section>
+
+    <!-- Article con contenido de proyecto -->
+    <section id="proyectos">
+        <h2>Proyectos</h2>
+        <article>
+            <h2>Sistema Bancario</h2>
+            <img src="proyecto.jpg" alt="Imagen de sistema bancario" width="300">
+            <p>Proyecto realizado en Java para manejar cuentas bancarias, empleados y clientes.</p>
+        </article>
+    </section>
+
+    <!-- Sección de contacto -->
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>Si deseas contactarme, puedes escribirme por mis redes sociales.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Samuel Arena - Portafolio</p>
+    </footer>
+
+</body>
+</html>
